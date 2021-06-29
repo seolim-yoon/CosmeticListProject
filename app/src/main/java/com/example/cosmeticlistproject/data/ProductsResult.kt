@@ -4,7 +4,5 @@ import com.google.gson.annotations.SerializedName
 
 data class ProductsResult(
     @SerializedName("products")
-    var productsList: List<Products> = arrayListOf(),
-    @SerializedName("brand")
-    var brandList: List<Brand> = arrayListOf()
+    var productsList: List<Products> = arrayListOf()
 )

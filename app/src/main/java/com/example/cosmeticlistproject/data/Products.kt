@@ -13,6 +13,8 @@ data class Products(
     @SerializedName("reviewCount")
     var reviewCount: String,
     @SerializedName("imageUrl")
-    var imageUrl: String
+    var imageUrl: String,
+    @SerializedName("brand")
+    var brand: Brand
 ) : Serializable {
 }
