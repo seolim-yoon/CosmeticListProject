@@ -7,6 +7,6 @@ object TextViewBindingAdapter {
     @BindingAdapter("setReview")
     @JvmStatic
     fun setReview(tvReview: TextView, reviewCount: String) {
-        tvReview.setText("(리뷰 $reviewCount)")
+        tvReview.text = "(리뷰 $reviewCount)"
     }
 }

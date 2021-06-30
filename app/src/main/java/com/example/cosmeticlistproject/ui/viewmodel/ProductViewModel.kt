@@ -13,9 +13,9 @@ class ProductViewModel: BaseViewModel() {
 
     var productResponse: MutableLiveData<ProductsResult> = MutableLiveData()
 
-    fun getResult() {
+    fun getResult(page: Int) {
         addDisposable(
-            productRepository.getResult()
+            productRepository.getResult(page)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ result ->

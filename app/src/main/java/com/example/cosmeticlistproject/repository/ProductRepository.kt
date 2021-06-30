@@ -8,10 +8,10 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class ProductRepository {
-    fun getResult(): Single<ProductsResult> =
+    fun getResult(page: Int): Single<ProductsResult> =
         Single.create { emitter ->
             RetrofitBuilder.api
-                .getProductsList2()
+                .getProductsList(page.toString())
                 .enqueue(object : Callback<ProductsResult> {
                     override fun onResponse(
                         call: Call<ProductsResult>,
@@ -25,5 +25,5 @@ class ProductRepository {
                         emitter.onError(t)
                     }
                 })
-        }
+            }
 }
