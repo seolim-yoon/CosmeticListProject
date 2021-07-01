@@ -4,9 +4,9 @@ import com.google.gson.annotations.SerializedName
 
 data class RecommendResult(
     @SerializedName("recommend1")
-    var recommendList1: ArrayList<Products> = arrayListOf(),
+    var recommendList1: ArrayList<Product> = arrayListOf(),
     @SerializedName("recommend2")
-    var recommendList2: ArrayList<Products> = arrayListOf(),
+    var recommendList2: ArrayList<Product> = arrayListOf(),
     @SerializedName("recommend3")
-    var recommendList3: ArrayList<Products> = arrayListOf()
+    var recommendList3: ArrayList<Product> = arrayListOf()
 )

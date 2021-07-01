@@ -2,7 +2,7 @@ package com.example.cosmeticlistproject.data
 
 import com.google.gson.annotations.SerializedName
 
-data class ProductsResult(
+data class ProductResult(
     @SerializedName("products")
-    var productsList: ArrayList<Products> = arrayListOf()
+    var productList: ArrayList<Product> = arrayListOf()
 )

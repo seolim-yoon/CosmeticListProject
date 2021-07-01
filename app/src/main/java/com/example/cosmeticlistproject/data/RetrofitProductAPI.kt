@@ -1,13 +1,13 @@
 package com.example.cosmeticlistproject.data
 
-import retrofit2.Call
+import io.reactivex.Single
 import retrofit2.http.GET
 import retrofit2.http.Path
 
 interface RetrofitProductAPI {
     @GET("public.glowday.com/test/app/product.{page}.json")
-    fun getProductsList(@Path("page")page: String) : Call<ProductsResult>
+    fun getProductList(@Path("page")page: String) : Single<ProductResult>
 
     @GET("public.glowday.com/test/app/recommend_product.json")
-    fun getRecommendsList() : Call<RecommendResult>
+    fun getRecommendList() : Single<RecommendResult>
 }

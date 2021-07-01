@@ -9,6 +9,7 @@ import com.example.cosmeticlistproject.base.BaseActivity
 import com.example.cosmeticlistproject.databinding.ActivityMainBinding
 import com.example.cosmeticlistproject.ui.adapter.ProductListAdapter
 import com.example.cosmeticlistproject.ui.viewmodel.ProductViewModel
+import com.example.cosmeticlistproject.util.StateResult
 
 class MainActivity : BaseActivity<ActivityMainBinding, ProductViewModel>() {
     override val layoutResID: Int = R.layout.activity_main
@@ -31,7 +32,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, ProductViewModel>() {
 
         viewModel.getResult(currentPage)
         viewModel.productResponse.observe(this, Observer { response ->
-            productListAdapter.addProducts(response.productsList)
+            productListAdapter.addProducts(response.productList)
         })
     }
 
@@ -42,7 +43,10 @@ class MainActivity : BaseActivity<ActivityMainBinding, ProductViewModel>() {
 
                 if(!viewDataBinding.rvProductList.canScrollVertically(1)) {
                     productListAdapter.deleteLoading()
-                    viewModel.getResult(++currentPage)
+
+                    if(viewModel.responseResult.value != StateResult.ERROR) {
+                        viewModel.getResult(++currentPage)
+                    }
                 }
             }
         })

@@ -3,7 +3,7 @@
     <data>
         <variable
             name="product"
-            type="com.example.cosmeticlistproject.data.Products" />
+            type="com.example.cosmeticlistproject.data.Product" />
     </data>
     <androidx.constraintlayout.widget.ConstraintLayout
         xmlns:android="http://schemas.android.com/apk/res/android"

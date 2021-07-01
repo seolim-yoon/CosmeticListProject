@@ -3,7 +3,7 @@ package com.example.cosmeticlistproject.data
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
-data class Recommends(
+data class Recommend(
     @SerializedName("productTitle")
     var productTitle: String,
     @SerializedName("ratingAvg")
