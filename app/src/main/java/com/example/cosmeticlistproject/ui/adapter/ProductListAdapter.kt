@@ -20,6 +20,7 @@ class ProductListAdapter(private val context: Context?) : RecyclerView.Adapter<R
     private val VIEW_TYPE_RECOMMEND = 2
 
     private var productList: ArrayList<Product> = arrayListOf()
+    private var recommendList: ArrayList<ArrayList<Recommend>> = arrayListOf()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when(viewType) {
@@ -44,6 +45,8 @@ class ProductListAdapter(private val context: Context?) : RecyclerView.Adapter<R
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if(holder is ProductViewHolder){
             holder.bind(productList[position])
+        } else if(holder is RecommendListViewHolder) {
+            holder.bind(recommendList[position / 11 - 1])
         }
     }
 
@@ -67,9 +70,9 @@ class ProductListAdapter(private val context: Context?) : RecyclerView.Adapter<R
 
     inner class RecommendListViewHolder(private val binding: ItemRecommendListBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(recommendList: List<Recommend>) {
-
             val recommendListAdapter = RecommendListAdapter(context, recommendList)
-            binding.rvRecommendList.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+            binding.rvRecommendList.layoutManager =
+                LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
             binding.rvRecommendList.adapter = recommendListAdapter
             recommendListAdapter.notifyDataSetChanged()
         }
@@ -77,13 +80,17 @@ class ProductListAdapter(private val context: Context?) : RecyclerView.Adapter<R
 
     fun addProducts(products: ArrayList<Product>) {
         productList.addAll(products)
-//        productList.add(11, Product("R", " ", " ", " ", " ", Brand(" ")))
         productList.add(Product(" ", " ", " ", " ", " ", Brand(" ")))
         notifyDataSetChanged()
     }
 
+    fun addRecommends(recommends: ArrayList<Recommend>, page: Int) {
+        productList.add(page, Product("R", " ", " ", " ", " ", Brand(" ")))
+        recommendList.add(recommends)
+        notifyDataSetChanged()
+    }
+
     fun deleteLoading() {
-        Log.v("seolim", "lastIndex : " + productList.lastIndex)
         productList.removeAt(productList.lastIndex)
     }
 }

@@ -1,6 +1,7 @@
 package com.example.cosmeticlistproject.ui.adapter
 
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -13,6 +14,7 @@ class RecommendListAdapter(private val context: Context?,
 
     inner class RecommendViewHolder(private val binding: ItemRecommendBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(recommend: Recommend) {
+            binding.recommend = recommend
         }
     }
 
@@ -26,12 +28,9 @@ class RecommendListAdapter(private val context: Context?,
     )
 
     override fun onBindViewHolder(holder: RecommendListAdapter.RecommendViewHolder, position: Int) {
-        if(holder is RecommendListAdapter.RecommendViewHolder){
-            holder.bind(recommendList[position])
-        }
+        holder.bind(recommendList[position])
     }
 
     override fun getItemCount(): Int = recommendList.size
-
 }
 
