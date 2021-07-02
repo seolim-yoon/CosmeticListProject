@@ -10,11 +10,12 @@ import com.example.cosmeticlistproject.util.StateResult
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 
-class ProductViewModel: BaseViewModel() {
+class ProductViewModel : BaseViewModel() {
     private val productRepository = ProductRepository()
 
     var productResponse: MutableLiveData<ProductResult> = MutableLiveData()
     var recommendResponse: MutableLiveData<RecommendResult> = MutableLiveData()
+    var stateResult: MutableLiveData<StateResult> = MutableLiveData()
 
     fun getProductResult(page: Int) {
         addDisposable(
@@ -23,7 +24,9 @@ class ProductViewModel: BaseViewModel() {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ result ->
                     productResponse.value = result
+                    stateResult.value = StateResult.SUCCESS
                 }, {
+                    stateResult.value = StateResult.ERROR
                     Log.e("seolim", "error : " + it.message.toString())
                 })
         )
@@ -36,7 +39,9 @@ class ProductViewModel: BaseViewModel() {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ result ->
                     recommendResponse.value = result
+                    stateResult.value = StateResult.SUCCESS
                 }, {
+                    stateResult.value = StateResult.ERROR
                     Log.e("seolim", "error : " + it.message.toString())
                 })
         )
