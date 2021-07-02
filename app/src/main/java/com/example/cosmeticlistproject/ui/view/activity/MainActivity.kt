@@ -1,4 +1,4 @@
-package com.example.cosmeticlistproject.ui.view
+package com.example.cosmeticlistproject.ui.view.activity
 
 import android.os.Bundle
 import androidx.lifecycle.Observer
