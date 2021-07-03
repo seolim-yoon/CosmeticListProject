@@ -14,8 +14,8 @@ class MainActivity : BaseActivity<ActivityMainBinding, ProductViewModel>() {
     override val layoutResID: Int = R.layout.activity_main
     override val viewModel: ProductViewModel = ProductViewModel()
 
-    lateinit var navController: NavController
-    lateinit var appBarConfituration: AppBarConfiguration
+    private lateinit var navController: NavController
+    private lateinit var appBarConfituration: AppBarConfiguration
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

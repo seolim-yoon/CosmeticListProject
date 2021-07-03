@@ -1,10 +1,7 @@
 package com.example.cosmeticlistproject.ui.view.fragment
 
 import android.os.Bundle
-import android.util.Log
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
@@ -12,9 +9,14 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.cosmeticlistproject.R
 import com.example.cosmeticlistproject.base.BaseFragment
-import com.example.cosmeticlistproject.data.Recommend
+import com.example.cosmeticlistproject.data.transformProductModel
+import com.example.cosmeticlistproject.data.transformRecommendModelList
 import com.example.cosmeticlistproject.databinding.FragmentListBinding
 import com.example.cosmeticlistproject.ui.adapter.ProductListAdapter
+import com.example.cosmeticlistproject.ui.model.BaseModel
+import com.example.cosmeticlistproject.ui.model.DetailModel
+import com.example.cosmeticlistproject.ui.model.ProductModel
+import com.example.cosmeticlistproject.ui.model.RecommendModel
 import com.example.cosmeticlistproject.ui.viewmodel.ProductViewModel
 
 class ListFragment: BaseFragment<FragmentListBinding, ProductViewModel>() {
@@ -23,17 +25,15 @@ class ListFragment: BaseFragment<FragmentListBinding, ProductViewModel>() {
 
     lateinit var navController: NavController
     private var currentPage = 1
-    private var recommendLists = ArrayList<ArrayList<Recommend>>()
+    private var recommendLists = ArrayList<ArrayList<RecommendModel>>()
     private val productListAdapter by lazy {
-        ProductListAdapter ({ product ->
+        ProductListAdapter {
             val bundle = Bundle()
-            bundle.putSerializable("product", product)
-            navController.navigate(R.id.action_listFragment_to_detailFragment, bundle)
-        }, { recommend ->
-            val bundle = Bundle()
-            bundle.putSerializable("recommend", recommend)
-            navController.navigate(R.id.action_listFragment_to_recommendDetailFragment, bundle)
-        })
+            detailModelMapper(it)?.let { detailModel ->
+                bundle.putSerializable("detailModel", detailModel)
+                navController.navigate(R.id.action_listFragment_to_detailFragment, bundle)
+            }
+        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -43,7 +43,7 @@ class ListFragment: BaseFragment<FragmentListBinding, ProductViewModel>() {
         initScrollView()
     }
 
-    fun initView() {
+    private fun initView() {
         with(viewDataBinding.rvProductList) {
             layoutManager = LinearLayoutManager(context)
             adapter = productListAdapter
@@ -54,19 +54,17 @@ class ListFragment: BaseFragment<FragmentListBinding, ProductViewModel>() {
             getRecommendResult()
 
             productResponse.observe(viewLifecycleOwner, Observer { response ->
-                productListAdapter.addProducts(response.productList, currentPage)
+                productListAdapter.addProducts(response.transformProductModel(), currentPage)
             })
 
             recommendResponse.observe(viewLifecycleOwner, Observer { response ->
-                recommendLists.add(response.recommendList1)
-                recommendLists.add(response.recommendList2)
-                recommendLists.add(response.recommendList3)
+                recommendLists.addAll(response.transformRecommendModelList())
                 productListAdapter.addRecommends(recommendLists)
             })
         }
     }
 
-    fun initScrollView() {
+    private fun initScrollView() {
         viewDataBinding.rvProductList.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
@@ -81,4 +79,15 @@ class ListFragment: BaseFragment<FragmentListBinding, ProductViewModel>() {
             }
         })
     }
+
+    private fun detailModelMapper(model : BaseModel) = when(model) {
+        is ProductModel -> {
+            DetailModel(model.imageUrl, model.productTitle)
+        }
+        is RecommendModel -> {
+            DetailModel(model.imageUrl, model.productTitle)
+        }
+        else -> null
+    }
+
 }

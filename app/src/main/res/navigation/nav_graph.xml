@@ -10,20 +10,9 @@
             android:id="@+id/action_listFragment_to_detailFragment"
             app:destination="@id/detailFragment"
             app:popUpToInclusive="false" />
-        <action
-            android:id="@+id/action_listFragment_to_recommendDetailFragment"
-            app:destination="@id/recommendDetailFragment" />
     </fragment>
     <fragment
         android:id="@+id/detailFragment"
         android:name="com.example.cosmeticlistproject.ui.view.fragment.DetailFragment"
         android:label="상세" />
-    <fragment
-        android:id="@+id/recommendDetailFragment"
-        android:name="com.example.cosmeticlistproject.ui.view.fragment.RecommendDetailFragment"
-        android:label="상세">
-        <action
-            android:id="@+id/action_recommendDetailFragment_self"
-            app:destination="@id/recommendDetailFragment" />
-    </fragment>
 </navigation>

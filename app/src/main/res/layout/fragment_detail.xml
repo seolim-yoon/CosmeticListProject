@@ -2,8 +2,8 @@
 <layout xmlns:app="http://schemas.android.com/apk/res-auto">
     <data>
         <variable
-            name="product"
-            type="com.example.cosmeticlistproject.data.Product" />
+            name="model"
+            type="com.example.cosmeticlistproject.ui.model.DetailModel" />
     </data>
     <androidx.constraintlayout.widget.ConstraintLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
@@ -14,7 +14,7 @@
             android:id="@+id/iv_product_img_detail"
             android:layout_width="0dp"
             android:layout_height="400dp"
-            imageUrl="@{product.imageUrl}"
+            imageUrl="@{model.imageUrl}"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"/>
@@ -24,7 +24,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
-            android:text="@{product.productTitle}"
+            android:text="@{model.productTitle}"
             app:layout_constraintTop_toBottomOf="@id/iv_product_img_detail"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"/>

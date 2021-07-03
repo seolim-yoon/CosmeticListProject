@@ -4,8 +4,8 @@ import android.os.Bundle
 import android.view.View
 import com.example.cosmeticlistproject.R
 import com.example.cosmeticlistproject.base.BaseFragment
-import com.example.cosmeticlistproject.data.Product
 import com.example.cosmeticlistproject.databinding.FragmentDetailBinding
+import com.example.cosmeticlistproject.ui.model.DetailModel
 import com.example.cosmeticlistproject.ui.viewmodel.ProductViewModel
 
 class DetailFragment: BaseFragment<FragmentDetailBinding, ProductViewModel>() {
@@ -18,6 +18,6 @@ class DetailFragment: BaseFragment<FragmentDetailBinding, ProductViewModel>() {
     }
 
     fun initView() {
-        viewDataBinding.product = arguments?.getSerializable("product") as Product
+        viewDataBinding.model = arguments?.getSerializable("detailModel") as DetailModel
     }
 }

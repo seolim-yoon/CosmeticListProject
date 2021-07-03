@@ -4,22 +4,21 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.cosmeticlistproject.data.Brand
-import com.example.cosmeticlistproject.data.Product
-import com.example.cosmeticlistproject.data.Recommend
 import com.example.cosmeticlistproject.databinding.ItemLoadingBinding
 import com.example.cosmeticlistproject.databinding.ItemProductBinding
 import com.example.cosmeticlistproject.databinding.ItemRecommendListBinding
+import com.example.cosmeticlistproject.ui.model.BaseModel
+import com.example.cosmeticlistproject.ui.model.ProductModel
+import com.example.cosmeticlistproject.ui.model.RecommendModel
 
-class ProductListAdapter(val itemClick: (Product) -> Unit,
-                         val recommendItemClick: (Recommend) -> Unit) :
+class ProductListAdapter(val itemClick: (BaseModel) -> Unit) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private val VIEW_TYPE_ITEM = 0
     private val VIEW_TYPE_RECOMMEND = 1
     private val VIEW_TYPE_LOADING = 2
 
-    private var productList: ArrayList<Product> = arrayListOf()
-    private var recommendList: ArrayList<ArrayList<Recommend>> = arrayListOf()
+    private var productList: ArrayList<ProductModel> = arrayListOf()
+    private var recommendList: ArrayList<ArrayList<RecommendModel>> = arrayListOf()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
@@ -61,7 +60,7 @@ class ProductListAdapter(val itemClick: (Product) -> Unit,
 
     inner class ProductViewHolder(private val binding: ItemProductBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(product: Product) {
+        fun bind(product: ProductModel) {
             binding.product = product
 
             itemView.setOnClickListener {
@@ -72,11 +71,11 @@ class ProductListAdapter(val itemClick: (Product) -> Unit,
 
     inner class RecommendListViewHolder(private val binding: ItemRecommendListBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(recommendList: ArrayList<Recommend>) {
+        fun bind(recommendList: ArrayList<RecommendModel>) {
             with(binding.rvRecommendList) {
                 layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
                 adapter = RecommendListAdapter(context, recommendList) {
-                    recommendItemClick(it)
+                    itemClick(it)
                 }
             }
         }
@@ -85,22 +84,22 @@ class ProductListAdapter(val itemClick: (Product) -> Unit,
     inner class LoadingViewHolder(private val binding: ItemLoadingBinding) :
         RecyclerView.ViewHolder(binding.root) {}
 
-    fun addProducts(products: ArrayList<Product>, page: Int) {
+    fun addProducts(products: List<ProductModel>, page: Int) {
         productList.addAll(products)
         when (page) {
             1 -> {
-                productList.add(10, Product("R", " ", " ", " ", " ", Brand(" ")))
-                productList.add(Product("R", " ", " ", " ", " ", Brand(" ")))
+                productList.add(10, ProductModel(productRank = "R"))
+                productList.add(ProductModel(productRank = "R"))
             }
             2 -> {
-                productList.add(32, Product("R", " ", " ", " ", " ", Brand(" ")))
+                productList.add(32, ProductModel(productRank = "R"))
             }
         }
-        productList.add(Product(" ", " ", " ", " ", " ", Brand(" ")))
+        productList.add(ProductModel(productRank = " "))
         notifyDataSetChanged()
     }
 
-    fun addRecommends(recommends: ArrayList<ArrayList<Recommend>>) {
+    fun addRecommends(recommends: ArrayList<ArrayList<RecommendModel>>) {
         recommendList.addAll(recommends)
     }
 
