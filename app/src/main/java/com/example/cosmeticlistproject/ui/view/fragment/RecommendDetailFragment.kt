@@ -5,11 +5,12 @@ import android.view.View
 import com.example.cosmeticlistproject.R
 import com.example.cosmeticlistproject.base.BaseFragment
 import com.example.cosmeticlistproject.data.Product
-import com.example.cosmeticlistproject.databinding.FragmentDetailBinding
+import com.example.cosmeticlistproject.data.Recommend
+import com.example.cosmeticlistproject.databinding.FragmentRecommendDetailBinding
 import com.example.cosmeticlistproject.ui.viewmodel.ProductViewModel
 
-class DetailFragment: BaseFragment<FragmentDetailBinding, ProductViewModel>() {
-    override val layoutResID: Int = R.layout.fragment_detail
+class RecommendDetailFragment: BaseFragment<FragmentRecommendDetailBinding, ProductViewModel>() {
+    override val layoutResID: Int = R.layout.fragment_recommend_detail
     override val viewModel: ProductViewModel = ProductViewModel()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -18,6 +19,6 @@ class DetailFragment: BaseFragment<FragmentDetailBinding, ProductViewModel>() {
     }
 
     fun initView() {
-        viewDataBinding.product = arguments?.getSerializable("product") as Product
+        viewDataBinding.recommend = arguments?.getSerializable("recommend") as Recommend
     }
 }

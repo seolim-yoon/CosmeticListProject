@@ -4,18 +4,24 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.example.cosmeticlistproject.data.Product
 import com.example.cosmeticlistproject.data.Recommend
 import com.example.cosmeticlistproject.databinding.ItemRecommendBinding
 
 class RecommendListAdapter(
     private val context: Context?,
-    private val recommendList: List<Recommend>
+    private val recommendList: List<Recommend>,
+    val itemClick: (Recommend) -> Unit
 ) : RecyclerView.Adapter<RecommendListAdapter.RecommendViewHolder>() {
 
     inner class RecommendViewHolder(private val binding: ItemRecommendBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(recommend: Recommend) {
             binding.recommend = recommend
+
+            itemView.setOnClickListener {
+                itemClick(recommend)
+            }
         }
     }
 

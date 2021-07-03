@@ -1,7 +1,5 @@
 package com.example.cosmeticlistproject.ui.adapter
 
-import android.content.Context
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -12,9 +10,9 @@ import com.example.cosmeticlistproject.data.Recommend
 import com.example.cosmeticlistproject.databinding.ItemLoadingBinding
 import com.example.cosmeticlistproject.databinding.ItemProductBinding
 import com.example.cosmeticlistproject.databinding.ItemRecommendListBinding
-import kotlinx.android.synthetic.main.item_recommend_list.view.*
 
-class ProductListAdapter(private val context: Context?) :
+class ProductListAdapter(val itemClick: (Product) -> Unit,
+                         val recommendItemClick: (Recommend) -> Unit) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private val VIEW_TYPE_ITEM = 0
     private val VIEW_TYPE_RECOMMEND = 1
@@ -65,6 +63,10 @@ class ProductListAdapter(private val context: Context?) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(product: Product) {
             binding.product = product
+
+            itemView.setOnClickListener {
+                itemClick(product)
+            }
         }
     }
 
@@ -73,7 +75,9 @@ class ProductListAdapter(private val context: Context?) :
         fun bind(recommendList: ArrayList<Recommend>) {
             with(binding.rvRecommendList) {
                 layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-                adapter = RecommendListAdapter(context, recommendList)
+                adapter = RecommendListAdapter(context, recommendList) {
+                    recommendItemClick(it)
+                }
             }
         }
     }
@@ -98,7 +102,6 @@ class ProductListAdapter(private val context: Context?) :
 
     fun addRecommends(recommends: ArrayList<ArrayList<Recommend>>) {
         recommendList.addAll(recommends)
-        notifyDataSetChanged()
     }
 
     fun deleteLoading() {

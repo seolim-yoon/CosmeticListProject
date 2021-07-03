@@ -1,17 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto" android:id="@+id/nav_graph"
-    app:startDestination="@id/detailFragment">
-    <fragment
-        android:id="@+id/detailFragment"
-        android:name="com.example.cosmeticlistproject.ui.view.fragment.DetailFragment"
-        android:label="DetailFragment" />
+    app:startDestination="@id/listFragment">
     <fragment
         android:id="@+id/listFragment"
         android:name="com.example.cosmeticlistproject.ui.view.fragment.ListFragment"
-        android:label="ListFragment" >
+        android:label="리스트">
         <action
             android:id="@+id/action_listFragment_to_detailFragment"
-            app:destination="@id/detailFragment" />
+            app:destination="@id/detailFragment"
+            app:popUpToInclusive="false" />
+        <action
+            android:id="@+id/action_listFragment_to_recommendDetailFragment"
+            app:destination="@id/recommendDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/detailFragment"
+        android:name="com.example.cosmeticlistproject.ui.view.fragment.DetailFragment"
+        android:label="상세" />
+    <fragment
+        android:id="@+id/recommendDetailFragment"
+        android:name="com.example.cosmeticlistproject.ui.view.fragment.RecommendDetailFragment"
+        android:label="상세">
+        <action
+            android:id="@+id/action_recommendDetailFragment_self"
+            app:destination="@id/recommendDetailFragment" />
     </fragment>
 </navigation>
