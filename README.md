@@ -35,7 +35,7 @@
 
 
 #### 3. 추천리스트
-<img src="https://user-images.githubusercontent.com/73940842/124383536-eca9e980-dd07-11eb-966b-d92ffcc23035.jpeg" width="300" height="500">  <img src="https://user-images.githubusercontent.com/73940842/124383535-ec115300-dd07-11eb-8372-030ac1148bef.jpeg" width="300" height="500">  <img src="https://user-images.githubusercontent.com/73940842/124383533-e9aef900-dd07-11eb-8166-df68ebe55327.jpeg" width="300" height="500">
+<img src="https://user-images.githubusercontent.com/73940842/124383536-eca9e980-dd07-11eb-966b-d92ffcc23035.jpeg" width="300" height="500"> <img src="https://user-images.githubusercontent.com/73940842/124383535-ec115300-dd07-11eb-8372-030ac1148bef.jpeg" width="300" height="500"> <img src="https://user-images.githubusercontent.com/73940842/124383533-e9aef900-dd07-11eb-8166-df68ebe55327.jpeg" width="300" height="500">
 
 
 ----------------
