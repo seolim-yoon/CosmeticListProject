@@ -48,6 +48,8 @@
 
 
 ####  - ListFragment.kt
+#####   : ViewModel을 선언해준다.
+
 ```
     override val viewModel: ProductViewModel by lazy {
         ViewModelProvider(
@@ -56,10 +58,11 @@
         ).get(ProductViewModel::class.java)
     }
 ```
-##### ViewModel을 선언해준다.
 
 
 #### - ProductViewModel.kt
+#####   : ViewModel에서 Product와 Recommend 리스트를 비동기로 받아온다.
+#####   : 성공 시 LiveData에 넣어 ProductListAdapter에서 처리해준다.
 
 ```
  init {
@@ -98,11 +101,10 @@
         )
     }
 ```
-##### ViewModel에서 Product와 Recommend 리스트를 비동기로 받아온다.
-##### 성공 시 LiveData에 넣어 ProductListAdapter에서 처리해준다.
 
 
 #### - RetrofitProductAPI.kt
+#####   : URI를 통해 json파일의 내용을 각각 Single<ProductResult>/Single<RecommendResult> 형태로 받아온다.
 
 ```
 interface RetrofitProductAPI {
@@ -113,13 +115,16 @@ interface RetrofitProductAPI {
     fun getRecommendList() : Single<RecommendResult>
 }
 ```
-##### URI를 통해 json파일의 내용을 각각 Single<ProductResult>/Single<RecommendResult> 형태로 받아온다.
-
     
 
+    
 #### 2. 제품 상세화면 호출하기
 
+    
 ####  - ListFragment.kt
+#####   : Recyclerview의 아이템 클릭 시 bundle에 데이터를 담아 DetailFragment.kt로 보낸다.
+#####   : detailModelMapper() 함수를 통해 클릭한 아이템의 자료형을 판단하여 DetailFragment.kt에 나타내기 위한 값을 보낸다.
+
 ```
    private val productListAdapter by lazy {
         ProductListAdapter {
@@ -131,26 +136,24 @@ interface RetrofitProductAPI {
         }
     }
 ```
-##### Recyclerview의 아이템 클릭 시 bundle에 데이터를 담아 DetailFragment.kt로 보낸다.
-##### -> detailModelMapper() 함수를 통해 클릭한 아이템의 자료형을 판단하여 DetailFragment.kt에 나타내기 위한 값을 보낸다.
 
     
 ####  - DetailFragment.kt
+#####   : ListFragment.kt에서 보낸 모델을 DetailFragment.kt에서 데이터바인딩을 사용하여 ui에 값을 연결한다.
 ```
    fun initView() {
         viewDataBinding.model = arguments?.getSerializable("detailModel") as DetailModel
         ...
     }
 ```
-##### ListFragment.kt에서 보낸 모델을 DetailFragment.kt에서 데이터바인딩을 사용하여 ui에 값을 연결한다.
 
-    
     
     
 #### 3. 무한스크롤 기능
 
     
 ####  - ListFragment.kt
+#####   : RecyclerView의 addOnScrollListener를 사용하여 가장 마지막 아이템에 도달 시 다음 데이터를 가져오도록 한다.
 ```
     private fun initScrollView() {
         viewDataBinding.rvProductList.addOnScrollListener(object : RecyclerView.OnScrollListener() {
@@ -170,5 +173,4 @@ interface RetrofitProductAPI {
         })
     }
 ```
-##### RecyclerView의 addOnScrollListener를 사용하여 가장 마지막 아이템에 도달 시 다음 데이터를 가져오도록 한다.
 
