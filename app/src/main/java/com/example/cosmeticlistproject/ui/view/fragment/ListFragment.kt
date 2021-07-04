@@ -3,8 +3,9 @@ package com.example.cosmeticlistproject.ui.view.fragment
 import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.Observer
-import androidx.navigation.NavController
-import androidx.navigation.Navigation
+import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.cosmeticlistproject.R
@@ -18,48 +19,55 @@ import com.example.cosmeticlistproject.ui.model.DetailModel
 import com.example.cosmeticlistproject.ui.model.ProductModel
 import com.example.cosmeticlistproject.ui.model.RecommendModel
 import com.example.cosmeticlistproject.ui.viewmodel.ProductViewModel
+import com.example.cosmeticlistproject.util.StateResult
 
 class ListFragment: BaseFragment<FragmentListBinding, ProductViewModel>() {
     override val layoutResID: Int = R.layout.fragment_list
-    override val viewModel: ProductViewModel = ProductViewModel()
+    override val viewModel: ProductViewModel by lazy {
+        ViewModelProvider(
+            viewModelStore,
+            ViewModelProvider.AndroidViewModelFactory(requireActivity().application)
+        ).get(ProductViewModel::class.java)
+    }
 
-    lateinit var navController: NavController
     private var currentPage = 1
-    private var recommendLists = ArrayList<ArrayList<RecommendModel>>()
+
     private val productListAdapter by lazy {
         ProductListAdapter {
             val bundle = Bundle()
             detailModelMapper(it)?.let { detailModel ->
                 bundle.putSerializable("detailModel", detailModel)
-                navController.navigate(R.id.action_listFragment_to_detailFragment, bundle)
+                findNavController().navigate(R.id.action_listFragment_to_detailFragment, bundle)
             }
         }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        navController = Navigation.findNavController(view)
         initView()
         initScrollView()
     }
 
     private fun initView() {
         with(viewDataBinding.rvProductList) {
-            layoutManager = LinearLayoutManager(context)
+            addItemDecoration(DividerItemDecoration(context, LinearLayoutManager.VERTICAL))
             adapter = productListAdapter
         }
 
         with(viewModel) {
-            getProductResult(currentPage)
-            getRecommendResult()
-
             productResponse.observe(viewLifecycleOwner, Observer { response ->
-                productListAdapter.addProducts(response.transformProductModel(), currentPage)
+                if(!loadPage.contains(currentPage)) {
+                    productListAdapter.addProducts(response.transformProductModel(), currentPage)
+                }
             })
 
             recommendResponse.observe(viewLifecycleOwner, Observer { response ->
-                recommendLists.addAll(response.transformRecommendModelList())
-                productListAdapter.addRecommends(recommendLists)
+                productListAdapter.addRecommends(response.transformRecommendModelList())
+            })
+
+            stateResult.observe(viewLifecycleOwner, Observer { state ->
+                if(state == StateResult.ERROR)
+                    productListAdapter.deleteLoading()
             })
         }
     }
@@ -73,8 +81,10 @@ class ListFragment: BaseFragment<FragmentListBinding, ProductViewModel>() {
                 val itemTotalCount = recyclerView.adapter!!.itemCount - 1
 
                 if (!viewDataBinding.rvProductList.canScrollVertically(1) && lastVisibleItemPosition == itemTotalCount) {
-                    productListAdapter.deleteLoading()
-                    viewModel.getProductResult(++currentPage)
+                    if (viewModel.stateResult.value == StateResult.SUCCESS) {
+                        productListAdapter.deleteLoading()
+                        viewModel.getProductResult(++currentPage)
+                    }
                 }
             }
         })
@@ -89,5 +99,4 @@ class ListFragment: BaseFragment<FragmentListBinding, ProductViewModel>() {
         }
         else -> null
     }
-
 }

@@ -7,10 +7,12 @@ import com.bumptech.glide.Glide
 object ImageViewBindingAdapter {
     @BindingAdapter("imageUrl")
     @JvmStatic
-    fun loadImage(ivThumnail: ImageView, url: String) {
-        Glide.with(ivThumnail.context)
-                .load(url)
-                .centerCrop()
-                .into(ivThumnail)
+    fun loadImage(ivThumbnail: ImageView, url: String) {
+        Glide.with(ivThumbnail.context)
+            .load(url)
+            .centerCrop()
+            .error(android.R.drawable.stat_notify_error)
+            .timeout(500)
+            .into(ivThumbnail)
     }
 }

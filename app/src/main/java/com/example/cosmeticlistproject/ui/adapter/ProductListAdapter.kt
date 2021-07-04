@@ -2,7 +2,6 @@ package com.example.cosmeticlistproject.ui.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.cosmeticlistproject.databinding.ItemLoadingBinding
 import com.example.cosmeticlistproject.databinding.ItemProductBinding
@@ -73,7 +72,6 @@ class ProductListAdapter(val itemClick: (BaseModel) -> Unit) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(recommendList: ArrayList<RecommendModel>) {
             with(binding.rvRecommendList) {
-                layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
                 adapter = RecommendListAdapter(context, recommendList) {
                     itemClick(it)
                 }

@@ -17,6 +17,13 @@ class ProductViewModel : BaseViewModel() {
     var recommendResponse: MutableLiveData<RecommendResult> = MutableLiveData()
     var stateResult: MutableLiveData<StateResult> = MutableLiveData()
 
+    var loadPage = mutableSetOf<Int>()
+
+    init {
+        getProductResult(1)
+        getRecommendResult()
+    }
+
     fun getProductResult(page: Int) {
         addDisposable(
             productRepository.getProductResult(page)
@@ -25,6 +32,7 @@ class ProductViewModel : BaseViewModel() {
                 .subscribe({ result ->
                     productResponse.value = result
                     stateResult.value = StateResult.SUCCESS
+                    loadPage.add(page)
                 }, {
                     stateResult.value = StateResult.ERROR
                     Log.e("seolim", "error : " + it.message.toString())
