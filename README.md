@@ -104,7 +104,7 @@
 
 
 #### - RetrofitProductAPI.kt
-#####   : URI를 통해 json파일의 내용을 각각 Single<ProductResult>/Single<RecommendResult> 형태로 받아온다.
+#####   : URI를 통해 json파일의 내용을 각각 Single 형태로 받아온다.
 
 ```
 interface RetrofitProductAPI {
@@ -173,4 +173,12 @@ interface RetrofitProductAPI {
         })
     }
 ```
+
+
+-------------
+
+
+### * 버그
+#####    - 60번째 아이템에서 아래로 스크롤 시 (더이상 가져올 데이터가 없는 상태) 마지막 60번 아이템이 삭제되는 현상
+
 
