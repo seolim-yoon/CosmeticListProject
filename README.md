@@ -1,21 +1,21 @@
 ## CosmeticListProject
 
 ### * Spec
-#####    * Kotlin
-#####    * AAC (ViewModel, Databinding, LiveData, Navigation)
-#####    * Retrofit2
-#####    * OkHttp
-#####    * RxJava
-#####    * MVVM Pattern
+#####    - Kotlin
+#####    - AAC (ViewModel, Databinding, LiveData, Navigation)
+#####    - Retrofit2
+#####    - OkHttp
+#####    - RxJava
+#####    - MVVM Pattern
 
 ### * 기능
-#####    * 제품의 20번째 마다 무한스크롤 기능 제공
-#####    * 제품리스트의 11번째, 22번째, 31번째에 추천리스트 제공
-#####    * 제품 클릭 시 상세페이지 화면
+#####    - 제품의 20번째 마다 무한스크롤 기능 제공
+#####    - 제품리스트의 11번째, 22번째, 31번째에 추천리스트 제공
+#####    - 제품 클릭 시 상세페이지 화면
 
 ### * UI
 #### 1.메인화면 (ListFragment) 
-![KakaoTalk_Image_2021-07-04-20-34-43_001](https://user-images.githubusercontent.com/73940842/124383495-b66c6a00-dd07-11eb-8753-5c2ca667fe27.jpeg)
+<img src="https://user-images.githubusercontent.com/73940842/124383495-b66c6a00-dd07-11eb-8753-5c2ca667fe27.jpeg" width="300" height="500">
 
 #### 2. 상세화면 (DetailFragment)
 ![Uploading KakaoTalk_Image_2021-07-04-20-34-43_002.jpeg…]()
