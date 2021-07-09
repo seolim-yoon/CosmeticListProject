@@ -1,15 +1,12 @@
 package com.example.cosmeticlistproject.ui.adapter
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.cosmeticlistproject.databinding.ItemLoadingBinding
 import com.example.cosmeticlistproject.databinding.ItemProductBinding
 import com.example.cosmeticlistproject.databinding.ItemRecommendListBinding
-import com.example.cosmeticlistproject.ui.model.BaseModel
-import com.example.cosmeticlistproject.ui.model.ProductModel
-import com.example.cosmeticlistproject.ui.model.RecommendModel
+import com.example.cosmeticlistproject.ui.model.*
 
 class ProductListAdapter(val itemClick: (BaseModel) -> Unit) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -17,7 +14,7 @@ class ProductListAdapter(val itemClick: (BaseModel) -> Unit) :
     private val VIEW_TYPE_RECOMMEND = 1
     private val VIEW_TYPE_LOADING = 2
 
-    private var productList: ArrayList<ProductModel> = arrayListOf()
+    private var modelList: ArrayList<BaseModel> = arrayListOf()
     private var recommendList: ArrayList<ArrayList<RecommendModel>> = arrayListOf()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -42,18 +39,19 @@ class ProductListAdapter(val itemClick: (BaseModel) -> Unit) :
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (holder is ProductViewHolder) {
-            holder.bind(productList[position])
+            holder.bind(modelList[position] as ProductModel)
         } else if (holder is RecommendListViewHolder) {
-            holder.bind(recommendList[position / 10 - 1])
+            holder.bind(modelList[position] as RecommendListModel)
         }
     }
 
-    override fun getItemCount(): Int = productList.size
+    override fun getItemCount(): Int = modelList.size
 
     override fun getItemViewType(position: Int): Int {
-        return when (productList[position].productRank) {
-            " " -> VIEW_TYPE_LOADING
-            "R" -> VIEW_TYPE_RECOMMEND
+        return when (modelList[position]) {
+            is ProductModel -> VIEW_TYPE_ITEM
+            is RecommendListModel -> VIEW_TYPE_RECOMMEND
+            is LoadingModel -> VIEW_TYPE_LOADING
             else -> VIEW_TYPE_ITEM
         }
     }
@@ -71,9 +69,9 @@ class ProductListAdapter(val itemClick: (BaseModel) -> Unit) :
 
     inner class RecommendListViewHolder(private val binding: ItemRecommendListBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(recommendList: ArrayList<RecommendModel>) {
+        fun bind(recommendListModel: RecommendListModel) {
             with(binding.rvRecommendList) {
-                adapter = RecommendListAdapter(context, recommendList) {
+                adapter = RecommendListAdapter(context, recommendListModel.recommendModels) {
                     itemClick(it)
                 }
             }
@@ -84,17 +82,17 @@ class ProductListAdapter(val itemClick: (BaseModel) -> Unit) :
         RecyclerView.ViewHolder(binding.root) {}
 
     fun addProducts(products: List<ProductModel>, page: Int) {
-        productList.addAll(products)
+        modelList.addAll(products)
         when (page) {
             1 -> {
-                productList.add(10, ProductModel(productRank = "R"))
-                productList.add(ProductModel(productRank = "R"))
+                modelList.add(10, RecommendListModel(recommendList[0]))
+                modelList.add(RecommendListModel(recommendList[1]))
             }
             2 -> {
-                productList.add(32, ProductModel(productRank = "R"))
+                modelList.add(32, RecommendListModel(recommendList[2]))
             }
         }
-        productList.add(ProductModel(productRank = " "))
+        modelList.add(LoadingModel())
         notifyDataSetChanged()
     }
 
@@ -103,6 +101,6 @@ class ProductListAdapter(val itemClick: (BaseModel) -> Unit) :
     }
 
     fun deleteLoading() {
-        productList.removeAt(productList.lastIndex)
+        modelList.removeAt(modelList.lastIndex)
     }
 }

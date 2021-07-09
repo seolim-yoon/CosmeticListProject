@@ -1,7 +1,6 @@
 package com.example.cosmeticlistproject.ui.view.fragment
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider

@@ -20,7 +20,6 @@ class ProductViewModel : BaseViewModel() {
     var loadPage = mutableSetOf<Int>()
 
     init {
-        Log.v("seolim", "init")
         getProductResult(1)
         getRecommendResult()
     }
@@ -41,7 +40,7 @@ class ProductViewModel : BaseViewModel() {
         )
     }
 
-    fun getRecommendResult() {
+    private fun getRecommendResult() {
         addDisposable(
             productRepository.getRecommendResult()
                 .subscribeOn(Schedulers.io())
