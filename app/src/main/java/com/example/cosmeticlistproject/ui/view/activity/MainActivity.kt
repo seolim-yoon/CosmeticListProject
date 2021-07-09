@@ -12,8 +12,4 @@ class MainActivity : BaseActivity<ActivityMainBinding, ProductViewModel>() {
     override val viewModel: ProductViewModel  by lazy {
         ViewModelProvider(viewModelStore, ViewModelProvider.AndroidViewModelFactory(application)).get(ProductViewModel::class.java)
     }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
 }

@@ -20,6 +20,7 @@ class ProductViewModel : BaseViewModel() {
     var loadPage = mutableSetOf<Int>()
 
     init {
+        Log.v("seolim", "init")
         getProductResult(1)
         getRecommendResult()
     }

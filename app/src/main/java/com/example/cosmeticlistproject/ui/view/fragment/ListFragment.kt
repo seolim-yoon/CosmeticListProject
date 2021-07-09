@@ -1,6 +1,7 @@
 package com.example.cosmeticlistproject.ui.view.fragment
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -56,18 +57,13 @@ class ListFragment: BaseFragment<FragmentListBinding, ProductViewModel>() {
 
         with(viewModel) {
             productResponse.observe(viewLifecycleOwner, Observer { response ->
-                if(!loadPage.contains(currentPage)) {
+                if(!loadPage.contains(currentPage) && viewModel.stateResult.value != StateResult.ERROR) {
                     productListAdapter.addProducts(response.transformProductModel(), currentPage)
                 }
             })
 
             recommendResponse.observe(viewLifecycleOwner, Observer { response ->
                 productListAdapter.addRecommends(response.transformRecommendModelList())
-            })
-
-            stateResult.observe(viewLifecycleOwner, Observer { state ->
-                if(state == StateResult.ERROR)
-                    productListAdapter.deleteLoading()
             })
         }
     }

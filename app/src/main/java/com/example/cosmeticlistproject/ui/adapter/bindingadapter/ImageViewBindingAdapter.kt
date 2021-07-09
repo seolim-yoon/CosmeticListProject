@@ -5,13 +5,11 @@ import androidx.databinding.BindingAdapter
 import androidx.swiperefreshlayout.widget.CircularProgressDrawable
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
-import com.bumptech.glide.request.RequestOptions
 
 object ImageViewBindingAdapter {
     @BindingAdapter("imageUrl")
     @JvmStatic
     fun loadImage(ivThumbnail: ImageView, url: String) {
-
         val circularProgressDrawable = CircularProgressDrawable(ivThumbnail.context)
         circularProgressDrawable.strokeWidth = 5f
         circularProgressDrawable.centerRadius = 30f
